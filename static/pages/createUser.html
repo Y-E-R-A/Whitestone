@@ -1,0 +1,132 @@
+<body>
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Whitestone</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a type="submit" name="action" ng-click="createUserCtrl.createUserRedirect()">Create User</a>
+                </li>
+                <li>
+                    <a type="submit" name="action" ng-click="createUserCtrl.editUserRedirect()"> Edit User</a>
+                </li>
+                <li>
+                    <a type="submit" name="action" ng-click="createUserCtrl.activityLogRedirect()">Activity Log</a>
+                </li>
+
+            </ul>
+            <ul></ul>
+
+            <li style="float:right">
+                <a class="active" type="submit" name="action" ng-click="createUserCtrl.logout()">Logout</a>
+            </li>
+            <li style="float:right">
+                <a style="color:white">
+                    <span class="glyphicon glyphicon-user" style="align-content: left"></span> {{createUserCtrl.userEmail}}</a>
+            </li>
+
+        </div>
+    </nav>
+
+    <div class="jumbotron" style="background-image: url(/static/css/media/blk_senate.jpg); background-size: cover">
+        <h1 style="padding-left:50px">
+            <font color=white>Create User</font>
+        </h1>
+    </div>
+
+    <center>
+        <div class="container">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6" style="background-color: #f2f4f7; padding: 0% 4% 4% 4%">
+                <h1 style="color:gray">
+                    <span class="glyphicon glyphicon-user">
+                </h1>
+                <h3 style="padding-bottom: 2%">
+                    <b>Create New User</b>
+                </h3>
+                <p>Fill the following fields to register a new user in the system.</p>
+
+                <form name="createUserCtrl.userForm">
+                    <div class="row" style="padding-bottom: 1%">
+                        <input name="fn" ng-model="createUserCtrl.first_name" class="form-control" placeholder="Enter First Name (1-20 characters)"
+                            ng-pattern="/^[a-zA-Z]{1,20}$/" required>
+                        <p ng-if="createUserCtrl.userForm.fn.$invalid && !createUserCtrl.userForm.fn.$pristine" class="help-block" style="color:red">Only 20 alpha characters allowed</p>
+                    </div>
+
+                    <div class="row" style="padding-bottom: 1%">
+                        <input name="ln" ng-model="createUserCtrl.last_name" class="form-control" placeholder="Enter Last Name (1-20 characters)"
+                            ng-pattern="/^[a-zA-Z]{1,20}$/" required>
+                        <p ng-if="createUserCtrl.userForm.ln.$invalid && !createUserCtrl.userForm.ln.$pristine" class="help-block" style="color:red">Only 20 alpha characters allowed</p>
+                    </div>
+
+                    <div class="row" style="padding-bottom: 1%">
+                        <input name="ab" ng-model="createUserCtrl.about" class="form-control" placeholder="About User (1-150 alphanumeric characters)"
+                            ng-pattern="/^[a-zA-Z\d\' ']{1,150}$/" required>
+                        <p ng-if="createUserCtrl.userForm.ab.$invalid && !createUserCtrl.userForm.ab.$pristine" class="help-block" style="color:red">Only 150 alphanumeric characters allowed</p>
+                    </div>
+
+
+                    <div class="row" style="padding-bottom: 1%">
+                        <input name="eml" ng-model="createUserCtrl.email" class="form-control" type="email" placeholder="UPRM Email" ng-pattern="/^[a-z]+\.[a-z]*\d*@upr\.edu$/"
+                            required>
+                        <p ng-if="createUserCtrl.userForm.eml.$invalid && !createUserCtrl.userForm.eml.$pristine" class="help-block" style="color:red">incorret email format</p>
+
+                    </div>
+
+
+                    <div class="row" style="padding-bottom: 1%">
+                        <input name="pswd" type="password" ng-model="createUserCtrl.password" class="form-control" placeholder="Pin (4 digits)" ng-pattern="/^[1-9]{1}[0-9]{3}$/"
+                            required>
+                        <p ng-if="createUserCtrl.userForm.pswd.$invalid && !createUserCtrl.userForm.pswd.$pristine" class="help-block" style="color:red">Only 4 numbers allowed</p>
+                    </div>
+
+
+                    <div class="row" style="text-align: left">
+                        <label>
+                            <b>
+                                <br>Select The User Role: </b>
+                        </label>
+                        <br>
+
+                        <input name="role" type="radio" ng-model="createUserCtrl.role" value="Senator" required> Senator
+                        <br>
+                        <input name="role" type="radio" ng-model="createUserCtrl.role" value="Chancellor"> Chancellor
+                        <br>
+                        <input name="role" type="radio" ng-model="createUserCtrl.role" value="Secretary"> Secretary
+                        <br>
+                        <input name="role" type="radio" ng-model="createUserCtrl.role" value="Administrator"> Administrator
+
+                    </div>
+
+                    <div class="row" style="text-align: left">
+
+                        <label>
+                            <b>
+                                <br>Select The User Classification: </b>
+                        </label>
+                        <br>
+
+                        <input name="title" type="radio" ng-model="createUserCtrl.title" value="Ex-Officio Student Senator" required> Ex-Officio Student Senator
+                        <br>
+                        <input name="title" type="radio" ng-model="createUserCtrl.title" value="Elect Student Senator"> Elect Student Senator
+                        <br>
+                        <input name="title" type="radio" ng-model="createUserCtrl.title" value="Elect Senator"> Elect Senator
+                        <br>
+                        <input name="title" type="radio" ng-model="createUserCtrl.title" value="Ex-Officio Senator"> Ex-Officio Senator
+                        <br>
+                        <input name="title" type="radio" ng-model="createUserCtrl.title" value="Staff"> Staff
+
+                    </div>
+
+                    <div class="row" style="padding-top: 6%">
+                        <button class="btn btn-primary btn-block" type="submit" name="action" ng-click="createUserCtrl.checkForm()">Create</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <div class="col-sm-3"></div>
+    </center>
+</body>

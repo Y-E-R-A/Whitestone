@@ -1,0 +1,229 @@
+<body>
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Whitestone
+                </a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li>
+                    <a type="submit" name="action" ng-click="votingCtrl.meetingRedirect()">Meeting</a>
+                </li>
+                <li class="active">
+                    <a type="submit" name="action" ng-click="createMeetingCtrl.voteRedirect()">Voting</a>
+                </li>
+                <li>
+                    <a type="submit" name="action" ng-click="votingCtrl.oldMeetingRedirect()">Old Meetings</a>
+                </li>
+
+            </ul>
+            <ul></ul>
+            <li style="float:right">
+                <a class="active" type="submit" name="action" ng-click="votingCtrl.logout()">Logout</a>
+                <li style="float:right">
+                    <a style="color:white">
+                        <span class="glyphicon glyphicon-user" style="align-content: left"></span> {{votingCtrl.email}}</a>
+
+        </div>
+    </nav>
+
+
+    <div class="jumbotron" style="background-image: url(/static/css/media/blk_senate.jpg); background-size: cover">
+        <h1 style="padding-left:50px">
+            <font color=white>Votings</font>
+        </h1>
+    </div>
+
+    <div ng-if="!votingCtrl.activeMeeting" style="padding-top: 15vh">
+        <br>
+        <br>
+
+
+
+        <h2 style="text-align: center">There is currently no active meeting</h2>
+        <p style="text-align: center"> Please start a new meeting session in to enable the voting opions.</p>
+
+
+
+
+
+    </div>
+
+    <div class="row" style="padding:2% 2% 2% 2%">
+
+        <div ng-if="votingCtrl.activeMeeting">
+            <div class="col-sm-6" style="background-color: #f2f4f7; padding:0% 5% 5% 5%">
+                <form name="votingCtrl.voteForm">
+                    <h2 style="text-align: center">
+                        <b>Create New Voting</b>
+                    </h2>
+                    <br>
+                    <p>Please fill all the fields and press "Create" button to start a new voting during the live session:
+                    </p>
+                    <p ng-if="!votingCtrl.correctLimit" style="color:red">Number of alternatives does not match the limit</p>
+                    <div class="floating-label">
+
+                        <div class="row" style="padding-bottom: 2%">
+                            <input name="vq" ng-model="votingCtrl.voting_question" class="form-control" ng-maxlength="200" placeholder="Voting Question (1-200 characters)"
+                                required>
+                            <p ng-if="votingCtrl.voteForm.vq.$invalid && !votingCtrl.voteForm.vq.$pristine" style="color:red">Only 200 alphanumeric characters allowed</p>
+                        </div>
+
+                        <div class="row" style="padding-bottom: 2%">
+                            <input name="vd" ng-model="votingCtrl.voting_instructions" class="form-control" ng-maxlength="200" placeholder="Voting Instructions (1-200 characters)"
+                                required>
+                            <p ng-if="votingCtrl.voteForm.vd.$invalid && !votingCtrl.voteForm.vd.$pristine" style="color:red">Only 200 alphanumeric characters allowed</p>
+                        </div>
+
+                        <div class="row">
+                            <label>
+                                <br>
+                                <b>Select all the participants </b>
+                            </label>
+
+                            <div ng-repeat="t in votingCtrl.titles">
+                                <div class="action-checkbox">
+                                    <input id="{{t.title}}" type="checkbox" value="{{t.title}}" ng-checked="t.selected" ng-click="votingCtrl.addToSelection(t)"
+                                    />
+                                    <label for="{{t.title}}">
+                                    </label>
+                                    {{t.title}}
+                                </div>
+                            </div>
+                            <p ng-if="!votingCtrl.optionSelected" style="color:red">Please select one or more participants</p>
+                        </div>
+
+                        <div class="row" style="padding-bottom: 2%">
+                            <br>
+                            <label>
+                                <b>Enter limit of selections </b>
+                            </label>
+                            <input name="vl" ng-model="votingCtrl.vLimit" class="form-control" ng-pattern="/^[0-9]{1,2}$/" placeholder="Limit (Max 2 digits)"
+                                required>
+                            <p ng-if="votingCtrl.voteForm.vl.$invalid && !votingCtrl.voteForm.vl.$pristine" style="color:red">Only 2 numeric characters allowed</p>
+                        </div>
+
+                        <label>
+                            <b>Enter voting Alternatives</b>
+                        </label>
+                        <div ng-repeat="alt in votingCtrl.votingAlternatives">
+                            <div class="row" style="padding-bottom: 2%">
+                                <div class="col-sm-11">
+
+                                    <input type="text" name="alternative" ng-model="alt.valt" class="form-control" placeholder="Alternative (1-100 characters)"
+                                        name="alternative (1-100 characters)" ng-model="alt.valt" class="form-control" placeholder="Alternative">
+                                    <p ng-if="!alt.valid" style="color:red">Only 100 alphanumeric characters allowed</p>
+                                </div>
+                                <button class="btn btn-primary" style="object-position:right;  padding-top:1px  " ng-click="votingCtrl.addAlternative()">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+
+                                <div class="col-sm-auto">
+                                    <button class="btn btn-default" name="action " ng-click="votingCtrl.removeAlternative($index)
+                                        "><span class="glyphicon glyphicon-trash"></span></button>
+                                </div>
+	
+
+                            </div>
+                        </div>
+                        
+                        
+                        
+
+
+                        <div class="row " style="padding-top: 10% ">
+                            <div class="col-sm-4 "></div>
+                            <div class="col-sm-4 ">
+                                <button class="btn btn-primary btn-block " style=" float:right;border-radius: 12px;
+                                        " type="submit " name="action " ng-click="votingCtrl.checkcreate() ">Create</button>
+                            </div>
+
+                            <div class="col-sm-4 ">
+                                <button class="btn btn-default btn-block " style="float:right;border-radius: 12px;
+                                        " type="reset " name="action " ng-click="votingCtrl.cancel() ">Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+                    
+                </div>
+
+            </div>
+
+            
+
+            <div class="col-sm-6 " style="text-align: left; padding:0% 5% 5% 5% ">
+               <div ng-if="votingCtrl.activeVotingQuestion " style="padding: 0% 5% 5% 3% ">
+
+                    <div class="row " style="background-color:rgb(70, 78, 91); padding: 0% 10% 5% 10% ">
+                        <font color=white>
+
+		        <h3 style="text-align: center "><b>Meeting's Active Votings</b>
+            </h3>
+                        <br>
+                        <h4><strong>Vote: {{votingCtrl.votingQuestion.vquestion}}</strong></h4>
+
+                        <h5>Date: {{votingCtrl.votingQuestion.vdate}} 
+            Time:{{votingCtrl.votingQuestion.vtime}}</h5>
+                            <br><h4>{{votingCtrl.votingQuestion.vinstructions}}</h4>
+                        
+                    
+			 <ol style="list-style: circle ">
+                            <div ng-repeat="choices in votingCtrl.votingChoices ">
+                                <li>{{choices.choice}}
+                                </li>
+                            </div>
+                        </ol></font>
+
+                        <div class="col-sm-8 "></div>
+                        <div class="col-sm-4 ">
+                            <button class="btn btn-danger btn-block " style="float:right;border-radius: 360px; " type="submit
+                                        " name="action " ng-click="votingCtrl.closeVotingQuestion() ">Close
+                            </button>
+                        </div>
+
+                        <!--<button style="float:right;padding:5px 30px;border-radius: 12px; " type="submit " name="action
+                                        " ng-click="votingCtrl.getVotingChoiceResults() ">GET</button>-->
+                    </div>
+                </div>
+
+<div class="pre-scrollable " style="max-height: 35% ; background-color:#f2f4f7 ">
+    <h3 style="text-align: center "><b>Closed Meeting's Votings</b></h3>
+
+                <div ng-repeat="v in votingCtrl.inActiveVotingQuestion ">
+
+                    <div class="col-sm-12 " style="background-color:#f2f4f7; padding: 0% 10% 5% 10% " ng-if="votingCtrl.activeMeeting ">
+                        <br>
+
+                            <div class="col-sm-2 " style="padding-top: 5% ">
+                                
+                                <h3><span class="glyphicon glyphicon-list-alt "></span></h3>
+                                
+                            </div>
+                                
+                            <div class="col-sm-10 ">
+                                <h4><strong>Vote: {{v.vquestion}}
+                                </strong></h4>
+                                <small>Date: {{v.vdate}} Time: {{v.vtime}}
+                                </small>
+                                <p>{{v.vinstructions}}
+                                    <br>
+                                </p>
+                                <ol style="list-style: circle " ng-repeat="c in votingCtrl.inActiveVotingChoices[v.vID] ">
+                                    <li>{{c.votes}}- {{c.choice}}
+                                    </li>
+                                </ol>
+                                <br>
+
+                        </div>
+                    </div>
+                         
+                    </div>
+                    </div>
+            </div>
+        </div>
+    
+
+</body>

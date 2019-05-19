@@ -1,0 +1,160 @@
+<body>
+
+
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Whitestone</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li>
+                    <a type="submit" name="action" ng-click="editUserCtrl.createUserRedirect()">Create User</a>
+                </li>
+                <li class="active">
+                    <a type="submit" name="action" ng-click="editUserCtrl.editUserRedirect()"> Edit User</a>
+                </li>
+                <li>
+                    <a type="submit" name="action" ng-click="editUserCtrl.activityLogRedirect()">Activity Log</a>
+                </li>
+
+            </ul>
+            <ul></ul>
+
+            <li style="float:right">
+                <a class="active" type="submit" name="action" ng-click="editUserCtrl.logout()">Logout</a>
+            </li>
+            <li style="float:right">
+                <a style="color:white">
+                    <span class="glyphicon glyphicon-user" style="align-content: left"></span> {{editUserCtrl.userEmail}}</a>
+            </li>
+
+        </div>
+    </nav>
+
+    <div class="jumbotron" style="background-image: url(/static/css/media/blk_senate.jpg); background-size: cover">
+        <h1 style="padding-left:50px">
+            <font color=white>Edit User</font>
+        </h1>
+    </div>
+
+
+
+    <div class="container" style="padding: 2% 2% 2% 2%">
+
+
+        <div class="col-sm-5" style="text-align:center">
+            <div class="card-header">
+                <h3>
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    <b>Edit User</b>
+                </h3>
+                <p>Select the user from the list to display and modify their account information:</p>
+            </div>
+            <br>
+
+            <font size=4>
+
+                <select size="12" ng-change="editUserCtrl.loadForm()" ng-model="editUserCtrl.selectedUser" ng-options="user as (user.firstname+'&nbsp'+user.lastname) for user in editUserCtrl.newUserList"
+                    style="padding-top: 1%; width:400px">
+                    <option value="">
+                        <font style="color: #4286f4">--Select User--</font>
+                    </option>
+                </select>
+            </font>
+        </div>
+
+        <div class="col-sm-1"></div>
+
+
+
+        <div class="col-sm-6" ng-show="editUserCtrl.showForm" style="background-color: #f2f4f7; padding: 2% 4% 4% 4%">
+            <h3 style="text-align:center">
+                <b>User Account</b>
+            </h3>
+
+            <p style="text-align: justify">Modify the desired fields and press "Save" to keep the changes. If you wish to delete the user account permanently,
+                press the "Delete" button. Otherwise, press "Cancel" button.</p>
+            <div class="row" style="padding: 2% 2% 1% 2%">
+                <label for="name" style="text-align:left">First Name:</label>
+
+                <input name="fn" id="name" ng-model="editUserCtrl.first_name" class="form-control" placeholder="First Name">
+
+                <div ng-if="editUserCtrl.firstnameVal" style="color:red">Only 20 alpha characters allowed</div>
+            </div>
+
+            <div class="row" style="padding: 1% 2% 1% 2%">
+                <label for="lname" style="text-align:left">Last Name:</label>
+
+                <input name="ln" id="lname" ng-model="editUserCtrl.last_name" class="form-control" placeholder="Last Name">
+
+                <div ng-if="editUserCtrl.lastnameVal" style="color:red">Only 20 alpha numeric characters allowed</div>
+            </div>
+
+            <div class="row" style="padding: 1% 2% 1% 2%">
+                <label for="about" style="text-align:left">About User:</label>
+
+                <input name="ab" id="about" ng-model="editUserCtrl.about" class="form-control" placeholder="About User">
+                <div ng-if="editUserCtrl.aboutVal" style="color: red">Only 150 alphanumbers allowed</div>
+            </div>
+            <div class="row" style="padding: 1% 2% 1% 2%">
+                <label for="email" style="text-align:left">UPR Email:</label>
+
+                <input name="eml" type="email" id="email" ng-model="editUserCtrl.email" class="form-control" placeholder="UPRM Email">
+
+                <div ng-if="editUserCtrl.emailVal" style="color:red">Incorrect email format</div>
+            </div>
+            <div class="row" style="padding: 1% 2% 1% 2%">
+                <label for="pin" style="text-align:left">Pin:</label>
+
+                <input name="pswd" id="pin" ng-model="editUserCtrl.password" class="form-control" type="password" placeholder="Pin">
+
+                <div ng-if="editUserCtrl.pinVal" style="color:red">Only 4 numbers allowed</div>
+            </div>
+            <div class="row" style="padding: 2% 2% 2% 2%; text-align: left">
+
+                <div class="col-sm-6">
+                    <br>
+                    <label>
+                        <b>User Classification: </b>
+                    </label>
+                    <br>
+                    <div ng-repeat="t in editUserCtrl.titles">
+                        <input type="radio" ng-model="editUserCtrl.titleSelect.selected" ng-value="t.title"> {{t.title}}
+
+                    </div>
+                </div>
+
+
+
+                <div class="col-sm-6">
+
+                    <br>
+                    <label>
+                        <b> User Role: </b>
+                    </label>
+                    <br>
+                    <div ng-repeat="r in editUserCtrl.roles">
+                        <input type="radio" ng-model="editUserCtrl.roleSelect.selected" ng-value="r.role"> {{r.role}}
+                    </div>
+                </div>
+
+
+
+
+            </div>
+            <br>
+
+            <div style="text-align:center">
+                <button type="submit" class="btn btn-sm btn-primary" name="action" ng-click="editUserCtrl.checkForm()">Save</button>
+                <button type="submit" class="btn btn-sm" style="border-color: red" name="action" ng-click="editUserCtrl.checkDelete()">Delete</button>
+                <button type="reset" class="btn btn-sm btn-default" style="border-color: black" name="action" ng-click="editUserCtrl.cancel()">Cancel</button>
+            </div>
+        </div>
+        <div ng-show="editUserCtrl.showMessage">
+            <p>The user data has been edited</p>
+        </div>
+        <br>
+    </div>
+
+</body>

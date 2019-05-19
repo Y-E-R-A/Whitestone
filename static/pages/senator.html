@@ -1,0 +1,82 @@
+<header>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="">Whitestone</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a class="active" type="submit" name="action" ng-click="">Request Turn</a>
+                </li>
+                <li>
+                    <a type="submit" name="action" ng-click="senatorCtrl.voteRedirect()">Voting</a>
+                </li>
+            </ul>
+            <ul></ul>
+            <li style="float:right">
+                <a class="active" type="submit" name="action" ng-click="senatorCtrl.logout()">Logout</a>
+                <li style="float:right">
+                    <a style="color:white">
+                        <span class="glyphicon glyphicon-user" style="align-content: left"></span> {{senatorCtrl.email}}</a>
+        </div>
+    </nav>
+</header>
+
+<body>
+
+
+    <div class="row" style="background-color:#f2f4f7">
+
+        <div ng-if="!senatorCtrl.activeMeeting">
+            <h2 style="text-align: center; padding-top:20vh">
+                <b>There is currently no active session</b>
+            </h2>
+            <p style="text-align: center;  padding-bottom: 20vh">The parliamentary session has not started yet.</p>
+        </div>
+
+    </div>
+
+
+    <div class="container">
+
+
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6" style="padding-top: 20vh">
+
+
+            <div id="active">
+                <div class="row">
+                    <h1 style="text-align: center">
+                        <b>Live Meeting</b>
+                    </h1>
+                    <br>
+                    <h4 style="text-align: center">If you want to request a turn to speak press the microphone button below. Once the request is granted,
+                        your speech will be recorded.</h4>
+
+
+
+                </div>
+                <div class="row" style="text-align:center">
+                    <button class="btn-mic" type="submit" name="action" ng-click="senatorCtrl.requestTurn()" ng-disabled="senatorCtrl.requestedTurn"
+                        style="text-align: center"></button>
+                </div>
+                <br>
+                <br>
+                <button class="btn btn-danger btn-block" type="submit" name="action" ng-click="senatorCtrl.cancelTurn()" id="close">Close turn</button>
+                <p style="text-align: center" id="wait">
+                    <span>
+                        <span class="glyphicon glyphicon-hourglass"></span> You are currently in the waiting list. Press "Close turn" to cancel the request.</p>
+                <p style="text-align: center" id="speaking" class="alert alert-success" role="alert">
+                    <br>You are allowed to speak. Press "Close turn" to stop recording.</p>
+
+
+                <h5 style="text-align: center; padding-top:15vh">
+                    <span class="glyphicon glyphicon-info-sign"></span> For the correct operation of the system, make sure your USB microphone is properly connected
+                    to your computer and that it is turned on.</h5>
+            </div>
+            <div class="col-sm-3"></div>
+
+
+
+        </div>
+</body>

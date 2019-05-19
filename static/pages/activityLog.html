@@ -1,0 +1,105 @@
+<body>
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Whitestone</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li>
+                    <a type="submit" name="action" ng-click="activityLogCtrl.createUserRedirect()">Create User</a>
+                </li>
+                <li>
+                    <a type="submit" name="action" ng-click="activityLogCtrl.editUserRedirect()"> Edit User</a>
+                </li>
+
+                <li class="active">
+                    <a type="submit" name="action" ng-click="activityLogCtrl.editUserRedirect()">Activity Log</a>
+                </li>
+
+            </ul>
+            <ul></ul>
+
+            <li style="float:right">
+                <a class="active" type="submit" name="action" ng-click="activityLogCtrl.logout()">Logout</a>
+            </li>
+            <li style="float:right">
+                <a style="color:white">
+                    <span class="glyphicon glyphicon-user" style="align-content: left"></span> {{activityLogCtrl.email}}</a>
+            </li>
+
+        </div>
+    </nav>
+    <div class="jumbotron" style="background-image: url(/static/css/media/blk_senate.jpg); background-size: cover">
+        <h1 style="padding-left:50px">
+            <font color=white>Activity Log</font>
+        </h1>
+    </div>
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-sm-3" style="text-align: center">
+                <h3>
+                    <span class="glyphicon glyphicon-calendar"></span>
+                    <b>Daily Activity Log</b>
+                </h3>
+                <br> Search all the logs of the following date:
+
+                <form name="logs">
+                    <br>
+                    <input type="text" ng-model="activityLogCtrl.date" class="form-control" placeholder="MM/DD/YYYY" pattern="^((0?[1-9]|1[012])[/](0?[1-9]|[12][0-9]|3[01])[/](20|21|22)[0-9]{2})*$"
+                        required/>
+                    <span class="alert">
+                        <font size=2 color=red>Fill the form with MM/DD/YYYY</font>
+                    </span>
+                    <button type="submit" class="btn btn-primary" name="action" ng-disabled="logs.activityLogCtrl.date.$error.pattern||!activityLogCtrl.date"
+                        ng-click="activityLogCtrl.searchActivity()">Search</button>
+
+
+                </form>
+
+
+
+            </div>
+
+
+
+            <div class="col-sm-9" style="padding-top:2%; padding-left:2%">
+
+                <div class="pre-scrollable" style="max-height: 100%">
+                    <table class="table table-striped" style="background-color:e0e3e5 ">
+                        <thead>
+
+                            <tr ng-if="activityLogCtrl.validation" style="background-color:#cfdef7">
+                                <th scope="col">Date</th>
+                                <th scope="col">Time</th>
+                                <th scope="col">Role</th>
+                                <th scope="col">Author</th>
+                                <th scope="col">Activity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+
+                            <tr ng-repeat="activity in activityLogCtrl.newActivityLogList">
+                                <td>{{activity.date}}</td>
+                                <td>{{activity.time}}</td>
+                                <td>{{activity.urole}}</td>
+                                <td>{{activity.email}}</td>
+                                <td>{{activity.logmessage}}</td>
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</body>

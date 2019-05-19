@@ -1,0 +1,162 @@
+<header>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="">Whitestone</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li>
+                    <a type="submit" name="action" ng-click="oldMeetingsCtrl.meetingRedirect()">Meeting</a>
+                </li>
+                <li>
+                    <a type="submit" name="action" ng-click="oldMeetingsCtrl.voteRedirect()">Voting</a>
+                </li>
+                <li class="active">
+                    <a class="active" type="submit" name="action" ng-click="">Old Meetings</a>
+                </li>
+
+            </ul>
+            <ul></ul>
+            <li style="float:right">
+                <a class="active" type="submit" name="action" ng-click="oldMeetingsCtrl.logout()">Logout</a>
+            </li>
+            <li style="float:right">
+                <a style="color:white">
+                    <span class="glyphicon glyphicon-user" style="align-content: left"></span> {{oldMeetingsCtrl.email}}</a>
+            </li>
+
+        </div>
+    </nav>
+</header>
+
+<body>
+
+    <div class="jumbotron" style="background-image: url(/static/css/media/blk_senate.jpg); background-size: cover">
+        <h1 style="padding-left:50px">
+            <font color=white>Old Meetings</font>
+        </h1>
+    </div>
+
+    <div class="row" style="background-color:white; padding-top: 20px; padding-bottom:20px">
+
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4" style="padding-bottom: 5%" style="text-align:center">
+            <h2 style="text-align: center; padding-bottom:2%">
+                <font color=black>Select the meeting you want to review:</font>
+            </h2>
+            <div class="pre-scrollable" style="background-color:black; opacity:0.75; max-height: 400px; text-align:left">
+                <input type="text" id="query" style="padding-bottom:5px; width:700px; padding-left:2%; border-color:dodgerblue" ng-model="query"
+                    placeholder="Search" />
+                <div ng-repeat="meetings in oldMeetingsCtrl.oldMeetingList | filter:query | orderBy: oldMeetingsCtrl.orderList" style="text-align: left">
+
+                    <div class="col-sm-2" style="padding-top: 5px; text-align:right">
+                        <div class="custom-control custom-checkbox">
+
+                            <input id="{{meetings.mID}}" type="checkbox" class="custom-control-input" name="mycheckbox" ng-model="meetings.checked" ng-click="oldMeetingsCtrl.checkMeeting(meetings)"
+                                ng-checked='meetings.checked' />
+
+
+                        </div>
+                    </div>
+                    <div class="col-sm-10" style="padding-bottom: 5">
+                        <div class="row" style="padding-right:5%">
+                            <font color=white>
+                                <label for="{{meetings.mID}}">
+                                    <h4>
+                                        <strong> {{meetings.mname}}</strong>
+                                    </h4>
+                                    {{meetings.mdescription}}
+
+                                    <br>
+
+                                    <small>Date: {{meetings.mdate}}
+                                        <br> Time: {{meetings.mtime}}</small>
+                                </label>
+                            </font>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+
+    </div>
+
+
+
+    <div ng-show="oldMeetingsCtrl.selected">
+
+        <div class="row" style="background-color:#f2f4f7">
+
+            <div class="page-header" style="text-align:center">
+                <h1>
+                    <b>Meeting Summary</b>
+                </h1>
+            </div>
+            <div class="col-sm-6">
+
+
+
+
+                <h2 style="text-align: center">
+                    <b>Voting Questions</b>
+                </h2>>
+                <div class="pre-scrollable" style="padding: 2% 2% 10% 10%">
+                    <div ng-repeat="votingQuestion in oldMeetingsCtrl.votingQuestionList">
+
+                        <h3>
+                            <span class="glyphicon glyphicon-ok" style="align-content: left"></span>
+                            <strong>
+                                Vote: {{votingQuestion.vquestion}}</strong>
+                        </h3>
+                        <p>Date: {{votingQuestion.vdate}} Time: {{votingQuestion.vtime}}</p>
+                        <br>
+                        <ol style="list-style: circle">
+                            <div ng-repeat="choices in oldMeetingsCtrl.votingChoiceList[votingQuestion.vID]">
+                                <li>{{choices.votes}} - {{choices.choice}} </li>
+                            </div>
+                        </ol>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                </div>
+
+
+
+            </div>
+
+            <div class="col-sm-6">
+
+                <h2 style="text-align: center">
+                    <b>Audio Files</b>
+                </h2>
+                <br>
+                <div class="pre-scrollable" style="padding: 2% 5% 10% 10%">
+                    <div ng-repeat="Audio in oldMeetingsCtrl.audioFilesList">
+
+                        <center>
+
+                            <small>Audio File: {{Audio.aname}}</small>
+                            <br>
+                            <audio id="audio" preload="none" tabindex="0" controls="" style="width: 75%; ">
+                                <source src={{Audio.aadress}}>
+                            </audio>
+                        </center>
+
+
+                        <p {{Audio.aadress}}></p>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</body>

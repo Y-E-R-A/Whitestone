@@ -1,0 +1,93 @@
+<header>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand">Whitestone</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="active">
+          <a class="active" type="submit" name="action">Meeting</a>
+        </li>
+        <li>
+          <a type="submit" ng-click="createMeetingCtrl.voteRedirect()">Voting</a>
+        </li>
+        <li>
+          <a type="submit" name="action" ng-click="createMeetingCtrl.oldMeetingRedirect()">Old Meetings</a>
+        </li>
+
+      </ul>
+      <ul></ul>
+      <li style="float:right">
+        <a class="active" type="submit" name="action" ng-click="createMeetingCtrl.logout()">Logout</a>
+        <li style="float:right">
+          <a style="color:white">
+            <span class="glyphicon glyphicon-user" style="align-content: left"></span> {{createMeetingCtrl.email}}</a>
+    </div>
+  </nav>
+</header>
+
+<body>
+  <div class="jumbotron" style="background-image: url(/static/css/media/blk_senate.jpg); background-size: cover">
+    <h1 style="padding-left:50px">
+      <font color=white>Meetings</font>
+    </h1>
+  </div>
+  <center>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-4"></div>
+
+        <div class="col-sm-4">
+
+
+          <!--<div ng-if="createMeetingCtrl.active" style="padding-top: 15vh; text-align: center">-->
+          <div ng-if="createMeetingCtrl.active" style="padding-top: 10vh; text-align: center">
+            <h2>
+              <b>Active Meeting</b>
+            </h2>
+            <br>
+            <h4 style="padding-bottom: 2%">"{{createMeetingCtrl.meeting.mname}}"
+              <br>
+              <br> Do you want to conclude this meeting?</h4>
+            <br>
+            <button class="btn btn-danger" type="submit" name="action" ng-click="createMeetingCtrl.checkActiveVotingQuestion()">Conclude</button>
+          </div>
+
+          <div ng-if="!createMeetingCtrl.active">
+
+            <!--<form name="meetingForm" action="" class="floating-label" style="background-color:#f2f4f7; padding: 5% 5% 5% 5%">-->
+            <!--<form name="meetingForm" class="floating-label" style="background-color:#f2f4f7; padding: 5% 5% 5% 5%">-->
+            <form name="createMeetingCtrl.meetingForm" class="floating-label" style="background-color:#f2f4f7; padding: 5% 5% 5% 5%">
+
+
+
+
+
+              <h2>Create new meeting session</h2>
+              <br>
+              <p>Please fill all the fields and press "create" to start a new session:</p>
+              <br>
+
+              <div class="floating-label" style="padding-bottom: 2%">
+                <input name="mn" ng-model="createMeetingCtrl.meeting_name" class="form-control" ng-maxlength="50" placeholder="Meeting Name (1-50 characters)"
+                  required>
+                <p ng-if="createMeetingCtrl.meetingForm.mn.$invalid && !createMeetingCtrl.meetingForm.mn.$pristine" style="color:red">Only 50 alphanumeric characters allowed</p>
+              </div>
+
+              <div class="floating-label">
+
+                <textarea name="md" class="form-control" rows="3" ng-model="createMeetingCtrl.meeting_desc" ng-maxlength="200" placeholder="Meeting Description (1-200 characters)"> </textarea>
+                <p ng-if="createMeetingCtrl.meetingForm.md.$invalid && !createMeetingCtrl.meetingForm.md.$pristine" style="color:red">Only 200 alphanumeric characters allowed</p>
+              </div>
+              <br>
+              <!--<button class="btn btn-primary btn-block" type="submit" name="action" ng-click="createMeetingCtrl.createMeeting()" ng-disabled="createMeetingCtrl.active" style="right">Create</button>-->
+              <button class="btn btn-primary btn-block" type="submit" name="action" ng-click="createMeetingCtrl.checkCreate()" ng-disabled="createMeetingCtrl.active">Create</button>
+            </form>
+            <div class="col-sm-4"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </center>
+
+</body>
