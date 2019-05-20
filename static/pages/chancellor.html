@@ -1,0 +1,117 @@
+<header>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="">Whitestone</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a class="active" type="submit" name="action" ng-click="">Request Turn</a>
+                </li>
+                <li>
+                    <a type="submit" name="action" ng-click="chancellorCtrl.voteRedirect()">Voting</a>
+                </li>
+            </ul>
+            <ul></ul>
+            <li style="float:right">
+                <a class="active" type="submit" name="action" ng-click="chancellorCtrl.logout()">Logout</a>
+                <li style="float:right">
+                    <a style="color:white">
+                        <span class="glyphicon glyphicon-user" style="align-content: left"></span> {{chancellorCtrl.email}}</a>
+        </div>
+    </nav>
+</header>
+
+<body>
+
+    <div class="row" style="background-color:#f2f4f7">
+
+        <div ng-if="!chancellorCtrl.activeMeeting">
+            <h2 style="text-align: center; padding-top:20vh">
+                <b>There is currently no active session</b>
+            </h2>
+            <p style="text-align: center;  padding-bottom: 20vh">The parliamentary session has not started yet.</p>
+        </div>
+
+    </div>
+
+
+    <div class="row" id="active" style="padding-top: 20vh">
+
+
+
+
+        <div class="col-sm-4">
+            <div class="pre-scrollable" style="background-color:black; text-align:center; padding:10vh 5vw 75vh 5vw">
+                <h2>
+                    <font color=white>Waiting List</font>
+                </h2>
+                <p>
+                    <font color=white>The following senators are waiting to receive approval to their resquest to speak. You can approve or
+                        deny the request as appropriate. Once the turn is granted, you will see the "Stop" button with which
+                        you can stop the senator's recording.</font>
+                </p>
+                <div ng-repeat="senator in chancellorCtrl.requestList" style="padding-top: 5vh">
+                    <font color=w hite>
+                        <h4>
+                            <span class="glyphicon glyphicon-user"></span>
+                            <b> {{senator.uname}} {{senator.ulastname}}</b>
+                        </h4>
+                    </font>
+
+
+                    <button type="submit" ng-hide="chancellorCtrl.senatorAllowed && (senator.uID==chancellorCtrl.senatorId)" class="btn btn-primary"
+                        name="action" ng-click="chancellorCtrl.grantTurn(senator.uID)" ng-disabled="chancellorCtrl.senatorAllowed">Allow</button>
+                    <button type="submit" ng-hide="chancellorCtrl.senatorAllowed && (senator.uID==chancellorCtrl.senatorId)" class="btn btn-light"
+                        name="action" ng-click="chancellorCtrl.denyTurn(senator.uID)" ng-disabled="chancellorCtrl.senatorAllowed">Deny</button>
+
+                    <div ng-if="chancellorCtrl.senatorAllowed && (senator.uID==chancellorCtrl.senatorId)">
+                        <font color=#428bca>
+                            <p>Senator Speaking</p>
+                        </font>
+                        <button type="submit" class="btn btn-light" name="action" ng-click="chancellorCtrl.denyTurn(senator.uID)">
+                            <span class="glyphicon glyphicon-stop"></span> Stop</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-8">
+            <center>
+
+                <!--<div ng-if="chancellorCtrl.activeMeeting">-->
+                <div class="row" style="padding-top: 20vh">
+                    <h1 style="text-align: center">
+                        <b>Live Meeting</b>
+                    </h1>
+                    <br>
+                    <h4 style="text-align: center">Press the microphone button to start recording your audio.</h4>
+
+                    <!--<div ng-if="!chancellorCtrl.recordingAudio">-->
+                    <div class="row" style="text-align: center">
+
+                        <button class="btn-mic" type="submit" name="action" id="start" ng-click="chancellorCtrl.allowMicrophone()" style="text-align:center"></button>
+                    </div>
+
+                    <!--<div ng-if="chancellorCtrl.recordingAudio">-->
+                    <br>
+                    <h4 id="speakMessage">
+                        <font color=#428bca> Your audio is currently being recorded</font>
+                    </h4>
+                    <button class="btn btn-light btn-lg" type="submit" name="action" ng-click="chancellorCtrl.stopRecording()" id="stop">
+                        <span class="glyphicon glyphicon-stop"></span> Stop Recording</button>
+                    <!--</div>-->
+                    <!--</div>-->
+                    <h5 style="text-align: center; padding-top:15vh">
+                        <span class="glyphicon glyphicon-info-sign"></span> For the correct operation of the system, make sure your USB microphone is properly connected
+                        to your computer and that it is turned on.</h5>
+
+
+                </div>
+
+
+            </center>
+        </div>
+    </div>
+
+</body>

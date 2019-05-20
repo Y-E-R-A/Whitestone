@@ -1,0 +1,126 @@
+<header>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="">Whitestone</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li>
+                    <a type="submit" name="action" ng-click="submitVoteCtrl.turnsRedirect()">Request Turn</a>
+                </li>
+                <li class="active">
+                    <a class="active" type="submit" name="action" ng-click="">Voting</a>
+                </li>
+
+            </ul>
+            <ul></ul>
+            <li style="float:right">
+                <a class="active" type="submit" name="action" ng-click="submitVoteCtrl.logout()">Logout</a>
+            </li>
+            <li style="float:right">
+                <a style="color:white">
+                    <span class="glyphicon glyphicon-user" style="align-content: left"></span> {{submitVoteCtrl.email}}</a>
+            </li>
+        </div>
+    </nav>
+</header>
+
+<body>
+
+
+    <div class="row" style="background-color: #f2f4f7">
+        <div ng-if="!submitVoteCtrl.activeMeeting" style=" padding-bottom:20vh; padding-top: 20vh">
+            <h2 style="text-align: center">
+                <b>There is no active meeting</b>
+            </h2>
+            <p style="text-align: center">Please wait until the meeting starts and a vote is announced.</p>
+        </div>
+        <div ng-if="submitVoteCtrl.activeMeeting && !submitVoteCtrl.activeVotingQuestion" style="padding-bottom:20vh; padding-top: 20vh">
+            <h2 style="text-align: center">
+                <b>There is no active voting question</b>
+            </h2>
+            <p style="text-align: center">Please transition to this page when a vote is announced.</p>
+        </div>
+        <div ng-if="submitVoteCtrl.participation && submitVoteCtrl.isParticipant && submitVoteCtrl.activeVotingQuestion" style="padding-bottom:20vh; padding-top: 20vh">
+            <h2 style="text-align: center">
+                <b>You already submitted your vote</b>
+            </h2>
+            <p style="text-align: center">Your response to the current vote has been satisfactorily submitted.</p>
+        </div>
+        <div ng-if="!submitVoteCtrl.isParticipant && submitVoteCtrl.activeVotingQuestion" style="padding-bottom:20vh; padding-top: 20vh">
+            <h2 style="text-align: center">
+                <b>You cannot participate in the voting question</b>
+            </h2>
+            <p style="text-align: center">You are not eligible to participate in the voting due to your classification within the Academic Senate.</p>
+        </div>
+    </div>
+
+
+
+    <div class="col-sm-4"></div>
+
+    <div class="col-sm-4" ng-if="!submitVoteCtrl.participation && submitVoteCtrl.activeVotingQuestion">
+
+
+        <h1 style="text-align: center; padding: 2% 0% 2% 0%">
+            <b>Active Voting</b>
+        </h1>
+
+        <h4>
+            <br>You are participating in an active voting. Follow the instructions provided below. To submit your vote press
+            the "Vote" button.
+        </h4>
+        <br>
+
+
+
+
+        <div class="col-sm-12" style="background-color:#f2f4f7; padding: 0% 3% 2% 3%">
+
+
+
+            <div class="row" style="text-align: center; background-color: #383535">
+                <font size=4 padding 15px 5px 10px 5px color=white>
+                    <br>{{submitVoteCtrl.VotingQuestion.vquestion}}</br>
+                </font>
+                <br>
+            </div>
+
+            <br>
+            <div class="row" style="padding: 1% 2% 4% 2%">
+                <font size=4>
+                    <b>Instructions:</b> {{submitVoteCtrl.VotingQuestion.vinstructions}}</font>
+            </div>
+
+
+
+            <div class="row" style="padding: 1% 4% 1% 4%" ng-repeat="choices in submitVoteCtrl.votingChoices">
+                <input id="{{choices.altID}}" type="checkbox" name="mycheckbox" ng-model="choices.checked" ng-click="submitVoteCtrl.checkChoice(choices)"
+                    ng-disabled="submitVoteCtrl.count >= submitVoteCtrl.limit && !choices.checked" ng-checked='choices.checked'
+                />
+                <label for="{{choices.altID}}">
+                    <font size=4> {{choices.choice}}</font>
+                </label>
+            </div>
+
+
+            <div class="row" style="padding: 10% 0% 5% 0%; text-align: center">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6">
+                    <button class="btn btn-primary btn-block" ng-disabled="submitVoteCtrl.participation" ng-click="submitVoteCtrl.checkSubmit()">Vote</button>
+                    <h5>
+                        <span class="glyphicon glyphicon-warning-sign"></span> Once submitted, your vote cannot be edited.</h5>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    </div>
+    <div class="col-sm-4">
+
+    </div>
+
+
+</body>

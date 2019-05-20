@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Whitestone Audio Recorder</title>
+ 
+  </head>
+  <body>
+    <h1>Whitestone Audio Recorder</h1>
+
+    <p>You must click the "Allow Microphone" button and then click "Allow" in the browser's prompt.<br> 
+      To begin recording, press the "Start" button.<br>To finish recording, press the "Stop" button.<br></p>
+    <div id='gUMArea'>
+      <div>
+        <input type="radio" name="media" value="audio" checked style="display: none;">
+      </div>
+      <button class="btn btn-default"  id='gUMbtn'>Allow Microphone</button>
+    </div>
+    <div id='btns'>
+      <button  class="btn btn-default" id='start'>Start</button>
+      <button  class="btn btn-default" id='stop'>Stop</button>
+    </div> 
+    <div>
+      <ul  class="list-unstyled" id='ul'></ul>
+    </div>   
+    <script>
+'use strict'
+
+// Define the variables to use for recording
+let log = console.log.bind(console),
+  id = val => document.getElementById(val),
+  ul = id('ul'),
+  gUMbtn = id('gUMbtn'),
+  start = id('start'),
+  stop = id('stop'),
+  stream,
+  recorder,
+  counter=1,
+  chunks,
+  media;
+
+
+// Get the user's microphone
+gUMbtn.onclick = e => {
+      let mediaOptions = {
+        audio: {
+          tag: 'audio',
+          type: 'audio/mpeg',
+          ext: '.mp3',
+          gUM: {audio: true}
+        }
+      };
+
+  media = mediaOptions.audio;
+  navigator.mediaDevices.getUserMedia(media.gUM).then(_stream => {
+    stream = _stream;
+    id('gUMArea').style.display = 'none';
+    id('btns').style.display = 'inherit';
+    start.removeAttribute('disabled');
+
+    // Create the recorder
+    recorder = new MediaRecorder(stream);
+
+    recorder.ondataavailable = e => {
+      chunks.push(e.data);
+      if(recorder.state == 'inactive')  
+        sendFile(); // Send the file when it is inactive
+    };
+    
+    log('Got media successfully');
+  }).catch(log);
+}
+
+// Start recording 
+start.onclick = e => {
+  start.disabled = true;
+  stop.removeAttribute('disabled');
+  chunks=[];
+  recorder.start();
+}
+
+// Stop recording
+stop.onclick = e => {
+  stop.disabled = true;
+  recorder.stop();
+  start.removeAttribute('disabled');
+}
+
+
+
+function sendFile(){
+
+  // Create a blob using the chunks.
+  let blob = new Blob(chunks, {type: media.type })
+
+ console.log(blob);
+
+  // Create variables to create the filename.
+  var aDate = new Date();
+  var aDateYear = aDate.getFullYear().toString();	
+  var aDateMonth = (aDate.getMonth()+1).toString();
+  var aDateDay = aDate.getDate().toString();
+  var aDateHour = aDate.getHours().toString();
+  var aDateMinutes = aDate.getMinutes().toString();
+  var aDateSeconds = aDate.getSeconds().toString();
+  var aFullDateAndTime = aDateYear.concat("-", aDateMonth, "-",aDateDay, "-",aDateHour, "-",aDateMinutes, "-", aDateSeconds,);
+
+  // Create an HTTP request.
+  var httpRequest = new XMLHttpRequest();
+
+  // Create a form data object to append to the request.
+  var aFileForm = new FormData();
+
+  //  Append the blob.
+  aFileForm.append('file', blob, aFullDateAndTime);
+
+  // Send the request to the Flask handler.
+  httpRequest.open("POST", "https://whitestone.uprm.edu/uploads");
+  httpRequest.onload =function(ev){
+    console.log("Request opened.");
+  }
+  httpRequest.setRequestHeader("Enctype", "multipart/form-data");
+  httpRequest.send(aFileForm);
+  console.log("Request sent.");
+  console.log(httpRequest.responseText);
+  console.log(httpRequest.statusText);
+
+ //POST to database
+  var addToDatabase = new XMLHttpRequest();
+  var addToDatabaseForm = new FormData();
+  addToDatabase.open("POST", "https://whitestone.uprm.edu/whitestone/3/audio");
+  addToDatabase.setRequestHeader("Enctype", "multipart/form-data");
+  addToDatabase.onload = function(ev){
+
+    var audioData = '{"aid" : "4", "mid" : "3", "aname" : ' + aFullDateAndTime + ' ,"aaddress" : ' + aFullDateAndTime + '"atype" : "mp3"}';
+    addToDatabase.send(audioData);
+    console.log("audioData: " + audioData);
+  }
+
+
+}
+
+</script>
+
+</body>
+</html>

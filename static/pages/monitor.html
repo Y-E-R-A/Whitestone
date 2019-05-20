@@ -1,0 +1,121 @@
+<body>
+
+
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="">Whitestone</a>
+			</div>
+		</div>
+	</nav>
+
+
+	<div class="jumbotron jumbotron-fluid">
+		<div class="container">
+			<h1 class="display-4">UPRM Academic Senate</h1>
+			<p class="lead">Official forum of the academic community for the discussion of general problems.</p>
+		</div>
+	</div>
+
+
+
+	<div ng-if="!monitorCtrl.activeMeeting" style="text-align: center; padding-top:15vh">
+		<h2 style="text-align: center">There is currently no active parliamentary session</h2>
+		<h4 style="padding-bottom:30vh;">Please wait until a meeting is created to view the informative panel.</h4>
+
+	</div>
+
+	<div ng-if="monitorCtrl.activeMeeting" style="text-align: center">
+
+
+		<div class="container">
+
+			<div class="row">
+				<div class="col-sm-2">
+
+					<h2 style="padding-top:15vh">
+						<font color=black>
+							<span class="glyphicon glyphicon-calendar"></span> Date: {{monitorCtrl.currentDate}}
+							<br>
+							<br>Time: {{monitorCtrl.currentTime}}</font>
+					</h2>
+
+
+				</div>
+
+				<div class="col-sm-1">
+
+
+				</div>
+
+				<div class="col-sm-8" style="background-color:#f2f4f7">
+
+					<div ng-if="monitorCtrl.activeVotingQuestion">
+
+						<div class="col-sm-12" style="background-color:white; padding: 2% 2% 2% 2%">
+
+							<h1 style="text-align: center; padding-left:30%">
+								<b>Meeting's Active Votings</b>
+							</h1>
+							<div style="padding: 10% 5% 10% 3%">
+
+								<div class="row" style="background-color:rgb(70, 78, 91); padding: 1% 10% 10% 10%; width: 1000px; text-align:left">
+									<font color=white>
+										<br>
+										<h2 style="padding:2% 2% 2% 2%">Question: {{monitorCtrl.votingQuestion.vquestion}}</h2>
+
+
+										<br>
+										<h3 style="padding-left:2%">Instructions: {{monitorCtrl.votingQuestion.vinstructions}}</h3>
+
+										<div ng-repeat="choices in monitorCtrl.votingChoices">
+											<h3>
+												<li style="padding-left:2%">{{choices.choice}}</li>
+											</h3>
+										</div>
+									</font>
+
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+
+
+					<div ng-if="monitorCtrl.lastVotingQuestion">
+
+						<div class="col-sm-12" style="background-color:white; padding: 2% 2% 2% 2%">
+							<h1 style="text-align: left">
+								<b>Votings Results</b>
+							</h1>
+							<div style="padding: 10% 5% 10% 3%">
+
+								<div class="row" style="background-color:rgb(70, 78, 91); padding: 8% 10% 10% 10%">
+									<font color=white>
+
+										<h2 style="padding:2% 2% 2% 2%">{{monitorCtrl.votingQuestion.vquestion}}</h2>
+										<br>
+										<h4>{{monitorCtrl.votingQuestion.vinstructions}}</h4>
+
+										<div ng-repeat="choices in monitorCtrl.votingChoices">
+
+											<h3>
+												<li>{{choices.choice}}: {{choices.votes}}</li>
+											</h3>
+										</div>
+
+									</font>
+
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>

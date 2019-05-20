@@ -1,0 +1,60 @@
+.loginStyle {
+  
+  width:auto;
+  min-height:100%;
+  height: auto;   
+  position:  relative; 
+  background-image: url("media/senate.jpg");
+  box-shadow: 0 9px 0px 0px white, 0 -9px 0px 0px white, 12px 0 15px -4px rgba(25, 25, 25, 0.8), -12px 0 15px -4px rgba(25, 25, 255, 0.8);
+  background-size:  cover;
+  border-top-left-radius:  1px; 
+  border-bottom-left-radius:  1px; 
+  svg {
+    height:  20px; 
+    width:  auto; 
+    margin:  20px; 
+  }
+}
+
+.pre-scrollable{
+    
+    max-height: 450px;
+    overflow-y:scroll;
+}
+.btn-mic{
+    float: center;
+    height: 160px;
+    width: 160px;
+    background: url("media/mic.png") repeat-x left top; 
+    background-position: center;
+    background-size: cover;
+    background-color:white;
+    border: none;
+    padding: 5% 0% 5% 0%;
+    font-size: 1em;
+    text-align: center;
+}
+.btn-green_mic{
+    float: center;
+    height: 150px;
+    width: 150px;
+    background: url("media/green_mic.png") repeat-x left top;
+    background-position: center;
+    background-size: cover;
+    background-color:white;
+    border: none;
+    padding: 5% 0% 5% 0%;
+    font-size: 1em;
+    text-align: center;
+}
+
+input ~ .alert {
+  display: none;
+}
+input:invalid ~ .alert {
+  display: block;
+}
+
+
+
+

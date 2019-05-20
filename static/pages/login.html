@@ -1,0 +1,82 @@
+<header>
+
+    <nav class="navbar navbar-inverse" style="margin:0">
+        <div class="container-fluid">
+            <div class="navbar-header" style="margin:0">
+                <a class="navbar-brand navbar navbar-inverse navbar-fixed-top" href="#" style="padding-left: 2%; margin:0"> Whitestone</a>
+            </div>
+
+        </div>
+    </nav>
+</header>
+
+<body>
+    <div class="row">
+
+        <div class="col-sm-4">
+            <div class=loginStyle>
+            </div>
+
+        </div>
+
+        <div class="col-sm-1">
+
+        </div>
+
+        <div class="col-sm-6" style="align-content: center; padding: 10% 0% 0% 0%">
+
+            <form name="loginCtrl.loginForm" class="floating-label" autocomplete="off">
+
+                <div class="floating-label">
+
+                    <h4 style="text-align:center">
+                        <b>WHITESTONE</b>
+                        <span>LOGIN</span>
+                    </h4>
+                    <p style="text-align:center">Welcome to the UPRM Academic Senate! Log in to your UPR account:</p>
+                    <br>
+                    <br>
+
+                    <span class="glyphicon glyphicon-envelope" style="align-content: left"> </span>
+                    <label for="email">Email:</label>
+                    <div class="icon">
+                    </div>
+                    <input type="email" class="form-control" placeholder="UPR Email Address" name="emailf" ng-model="loginCtrl.email" ng-pattern="/^[a-z]+\.[a-z]*\d*@upr\.edu$/"
+                        required>
+                </div>
+
+                <div class="floating-label">
+                    <br>
+                    <span class="glyphicon glyphicon-pencil" style="align-content: left"> </span>
+                    <label>Password:</label>
+                    <div class="icon"> </div>
+
+                    <div name="passf" ng-if="loginCtrl.radiusLogin">
+                        <input type="password" class="form-control" ng-model="loginCtrl.password" placeholder=" Password" type="password" required>
+                    </div>
+                    <div ng-if="!loginCtrl.radiusLogin">
+                        <input type="password" class="form-control" name="passf" ng-model="loginCtrl.password" placeholder=" Access Code" ng-pattern="/^[0-9]{1,4}$/"
+                            required>
+                    </div>
+
+                    <br>
+                    <br>
+                    <center>
+                        <button class="btn btn-primary btn-sm" type="submit" name="action" ng-click="loginCtrl.checkForm()">Log in</button>
+                    </center>
+
+
+
+
+
+
+                </div>
+
+
+            </form>
+        </div>
+        <div class="col-sm-1">
+
+        </div>
+    </div>
+</body>
