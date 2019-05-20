@@ -74,11 +74,17 @@ of the application. Run the following commands:
     sudo systemctl start postgresql
     sudo systemctl daemon-reload
 
-4. Put the Whitestone application folders in the location in which they will be served by
-Apache (/var/www/html/). It is recommended that you use clone directly the Whitestone repository for a clean
-or new installation.  The clone URL is: https://github.com/Y-E-R-A/Whitestone-Meeting-System.git
+4. Open the Whitestone_installation directory using the Terminal and navigate inside the folder.
 
+5. Run the following commands:
+    sudo chmod +x install.sh
+    ./install.sh
+    
+6. Important note: After running the script you will be asked for:
+     postgresql password = icom ,and then 
+     whitestoneadmin password= capstone
 
+6. The command above must have installed the clean Whitestone database and the Whitestone app in the directory /var/www/html
 
 
 ---------------------------------------------------------------------------------------------------
