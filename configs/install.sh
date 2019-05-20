@@ -62,7 +62,6 @@ createDB(){
 
 createDB 					# Call the function to drop and create a empty db to for the restore
 restoreDB					# Restore all the existing data from the .sql clean file
-git clone "https://github.com/Y-E-R-A/Whitestone-Meeting-System.git /var/www/html/"
-
+git clone "https://github.com/Y-E-R-A/Whitestone-Meeting-System.git" /var/www/html/
 
 exit 0						# End of the script
