@@ -103,7 +103,7 @@ angular.module('Whitestone').controller('LoginController', ['$http', '$log', '$s
             var data = {};
             data.email = this.email;
             data.pin = this.password;
-            data.login = "LOCAL;"
+            data.login = "LOCAL"
 
             // Now create the url with the route to talk with the rest API
             var reqURL = "https://whitestone.uprm.edu/whitestone/credentials/user";
