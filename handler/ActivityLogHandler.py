@@ -47,8 +47,8 @@ class ActivityLogHandler:
         :param date:(str) DD/MM/YYYY
         :return:
         """
-        day, month, year = date.split('/')
-        
+        day, month, year = date.split('-')
+
         isValidDate = True
         try:
             datetime.datetime(int(year), int(month), int(day))
@@ -56,7 +56,8 @@ class ActivityLogHandler:
             isValidDate = False
 
         if (isValidDate):
-            date = Date(int(year), int(month), int(day))
+            date= str(year).zfill(4) +"-"+ str(month).zfill(2) +"-"+ str(day).zfill(2)
+            print(date)
             result = ActivityLogDAO().getActivityLogByDate(date)
             mapped_result = []
 
@@ -70,6 +71,7 @@ class ActivityLogHandler:
 
         else:
             return jsonify(Error="Unexpected attributes in post request"), 400
+
 
     
     def insertActivityLogJSON(self, json):
