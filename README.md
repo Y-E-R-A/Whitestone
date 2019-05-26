@@ -2,7 +2,7 @@
 # Team: CodingGear                                                                           #
 # Authors: Ariel Torres Perez, Yomaira Rivera Albarran, Gustavo Hernandez Ortiz              #
 # Updated: 5/8/2019                                                                          #
-# Purpose: The purpose of this file is to detail the installtion process                     #
+# Purpose: The purpose of this file is to detail the installation process                     #
 #          for the Whitestone application                                                    #
 ##############################################################################################
 
@@ -68,6 +68,7 @@ of the application. Run the following commands:
     sudo pip3.5 install flask-cors
     sudo pip3.5 install py-radius
     sudo yum install git
+    sudo yum install httpd
     sudo systemctl enable httpd
     sudo systemctl start httpd
     sudo systemctl enable postgresql
@@ -112,6 +113,26 @@ B. I need to install the Whitestone application from an existing backup
 presented on-screen.
 
 
+------------------------------------------------------------------------------------------------------
 
+Configuring new computers to the Whitestone's local private network:
+
+Accepting computer through iptables: 
+
+iptables -I INPUT -p tcp -s <yourcomputeripaddress> --dport 443 -j ACCEPT
+iptables -I INPUT -p tcp -s <yourcomputeripaddress> --dport 80 -j ACCEPT
+
+Denying computer access through iptables:
+
+iptables -D INPUT -p tcp -m <yourcomputeripaddress> --dport 443 -j DROP
+iptables -D INPUT -p tcp -m <yourcomputeripaddress> --dport 80 -j DROP
+
+
+--------------------------------------------------------------------------------------------------------
+To change the Login type from RADIUS to LOCAL or viceversa:
+1. Open the class: login.js at /Whitestone/static/appjs
+2. Change the  variable this.radiusLogin  =  true; or this.radiusLogin= false; 
+3. Go to the function this.loginUser and change the variable data.login  =  "RADIUS"
+ or data.login  =  "LOCAL"
 
 
