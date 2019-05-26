@@ -57,7 +57,7 @@ angular.module('Whitestone').controller('activityLogController', ['$http', '$log
                         alert("Not authorized to use the application");
                     }
                     else if (status == 404) {
-                        //alert("Request Not Found");
+                        alert("Activity Not Found");
                     }
                     else {
                         //alert("Internal Error");
