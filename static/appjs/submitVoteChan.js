@@ -74,6 +74,8 @@ angular.module('Whitestone').controller('submitVoteChanController', ['$http', '$
                 function (response) {
                     if (confirm("Are you sure you want to submit your answer?")) {
                         thisCtrl.disableParticipation();
+                        thisCtrl.recordActivity("Vote");
+
                     }
                 }, //Error function
                 function (response) {
