@@ -48,7 +48,7 @@ SET default_with_oids = false;
 
 CREATE TABLE activitylog (
     logid integer NOT NULL,
-    date date,
+    date character varying,
     "time" time without time zone,
     urole character varying(15),
     uemail character varying(50),
@@ -155,7 +155,7 @@ ALTER SEQUENCE credential_cid_seq OWNED BY credential.cid;
 
 CREATE TABLE meeting (
     mid integer NOT NULL,
-    mdate date,
+    mdate character varying,
     mtime time without time zone,
     mname character varying(50),
     mdescription character varying(200),
@@ -315,7 +315,7 @@ CREATE TABLE votingquestion (
     vid integer NOT NULL,
     mid integer,
     vinstructions character varying(200),
-    vdate date,
+    vdate character varying,
     vtime time without time zone,
     vquestion character varying(200),
     selectionlimit character varying(2),
