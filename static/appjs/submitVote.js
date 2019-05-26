@@ -79,6 +79,8 @@ angular.module('Whitestone').controller('submitVoteController', ['$http', '$log'
                     //console.log("response check meeting: " + JSON.stringify(response.data))
                     if (confirm("Are you sure you want to submit your answer?")) {
                         thisCtrl.disableParticipation();
+                        thisCtrl.recordActivity("Vote");
+
                     }
                 }, //Error function
                 function (response) {
